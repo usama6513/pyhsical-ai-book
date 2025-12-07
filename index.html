@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical AI Book - Interactive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2e8555 0%, #1a4620 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #f5f5f5;
+            padding: 15px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #2e8555;
+            color: #2e8555;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background: #2e8555;
+            color: white;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 {
+            color: #2e8555;
+            margin: 20px 0 15px 0;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #1a4620;
+            margin: 15px 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        p {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .learning-objectives {
+            background: #e8f5e9;
+            border-left: 4px solid #2e8555;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .learning-objectives h4 {
+            color: #1a4620;
+            margin-bottom: 10px;
+        }
+
+        .learning-objectives ul {
+            margin-left: 20px;
+        }
+
+        .learning-objectives li {
+            margin: 5px 0;
+        }
+
+        .example-box {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .example-box h4 {
+            color: #2e8555;
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .try-this {
+            background: #fffbea;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .try-this h4 {
+            color: #d97706;
+            margin-bottom: 10px;
+        }
+
+        .key-takeaways {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .key-takeaways h4 {
+            color: #059669;
+            margin-bottom: 10px;
+        }
+
+        .key-takeaways ul {
+            margin-left: 20px;
+        }
+
+        .key-takeaways li {
+            margin: 5px 0;
+        }
+
+        .diagram {
+            background: #e8f5e9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .btn {
+            background: #2e8555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            margin: 10px 5px 10px 0;
+        }
+
+        .btn:hover {
+            background: #1a4620;
+            transform: translateY(-2px);
+        }
+
+        .checkpoint {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .checkpoint h4 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .question summary {
+            cursor: pointer;
+            color: #2e8555;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .question summary:hover {
+            background: #f0f0f0;
+        }
+
+        .answer {
+            padding: 10px 10px 10px 30px;
+            background: #f9f9f9;
+            margin-top: 10px;
+            border-left: 2px solid #2e8555;
+        }
+
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+
+        .status {
+            display: inline-block;
+            background: #2e8555;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Physical AI Book</h1>
+            <p>Learn AI through hands-on examples | Interactive & Progressive</p>
+        </header>
+
+        <nav>
+            <a href="#" onclick="showSection('home')" class="nav-link active">🏠 Home</a>
+            <a href="#" onclick="showSection('lesson1')" class="nav-link">📖 Lesson 1</a>
+            <a href="#" onclick="showSection('lesson2')" class="nav-link">📖 Lesson 2</a>
+            <a href="#" onclick="showSection('lesson3')" class="nav-link">📖 Lesson 3</a>
+            <a href="#" onclick="showSection('about')" class="nav-link">ℹ️ About</a>
+        </nav>
+
+        <div class="content">
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <h2>Welcome to Physical AI Book! 🚀</h2>
+                <p>Learn artificial intelligence through practical, hands-on examples. No complex math, just intuitive learning.</p>
+
+                <div class="learning-objectives">
+                    <h4>What You'll Learn</h4>
+                    <ul>
+                        <li>✅ Core AI pipeline: Input → Model → Output</li>
+                        <li>✅ How parameters control AI behavior</li>
+                        <li>✅ Real-world AI applications</li>
+                        <li>✅ How to think about AI problems</li>
+                    </ul>
+                </div>
+
+                <h3>Quick Start</h3>
+                <p>Click the navigation above to explore three interactive lessons:</p>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li><strong>Lesson 1:</strong> What is Physical AI? (Fundamentals)</li>
+                    <li><strong>Lesson 2:</strong> Core Concepts & Intuition</li>
+                    <li><strong>Lesson 3:</strong> Building Your AI Intuition</li>
+                </ul>
+
+                <h3>Estimated Time</h3>
+                <p>⏱️ Total: ~90 minutes (25-35 minutes per lesson)</p>
+
+                <p style="margin-top: 30px; padding: 15px; background: #e8f5e9; border-radius: 5px;">
+                    <strong>Ready to start?</strong> Click on <strong>Lesson 1</strong> above or keep reading for more info.
+                </p>
+            </section>
+
+            <!-- Lesson 1 Section -->
+            <section id="lesson1" class="section">
+                <h2>Lesson 1: What is Physical AI?</h2>
+                <p>Estimated Time: 25 minutes</p>
+
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand the AI pipeline (input → model → output)</li>
+                        <li>Learn how parameters control behavior</li>
+                        <li>Run and modify working AI examples</li>
+                    </ul>
+                </div>
+
+                <h3>Concept: The AI Pipeline</h3>
+                <p>Every AI system, from simple to complex, follows the same basic structure:</p>
+
+                <div class="diagram">Input Data
+    ↓
+[AI Model with Parameters]
+    ↓
+Output/Prediction</div>
+
+                <p><strong>Key Idea:</strong> Parameters are the "knobs and dials" that control how the model works. Change the parameters → different output!</p>
+
+                <div class="example-box">
+                    <h4>Example 1: Your First AI Program</h4>
+                    <pre><code>const input = 10;
+const multiplier = 2;  // This is a parameter
+
+const output = input * multiplier;
+
+console.log(`Input: ${input}`);
+console.log(`Multiplier: ${multiplier}`);
+console.log(`Output: ${output}`);</code></pre>
+                    <p><strong>Output:</strong></p>
+                    <pre><code>Input: 10
+Multiplier: 2
+Output: 20</code></pre>
+                </div>
+
+                <p>Notice: The multiplier is a <strong>parameter</strong> - it controls how the input transforms to output.</p>
+
+                <div class="try-this">
+                    <h4>🔧 Try This</h4>
+                    <ul>
+                        <li>Change multiplier from 2 to 5. What happens to output?</li>
+                        <li>Try multiplier = 0. What do you expect?</li>
+                        <li>Try negative multiplier. Does it work?</li>
+                    </ul>
+                </div>
+
+                <div class="key-takeaways">
+                    <h4>✅ Key Takeaways</h4>
+                    <ul>
+                        <li>AI Pipeline = Input → Model → Output</li>
+                        <li>Parameters control the model's behavior</li>
+                        <li>Same input + different parameters = different output</li>
+                        <li>This is the foundation of ALL AI systems</li>
+                    </ul>
+                </div>
+
+                <div class="checkpoint">
+                    <h4>📋 Check Your Understanding</h4>
+                    <div class="question">
+                        <details>
+                            <summary>Q1: What are the three main parts of an AI pipeline?</summary>
+                            <div class="answer">
+                                <strong>Answer:</strong> Input, Model (with parameters), and Output. Data flows from input through the model to produce output.
+                            </div>
+                        </details>
+                    </div>
+                    <div class="question">
+                        <details>
+                            <summary>Q2: What does changing a parameter do?</summary>
+                            <div class="answer">
+                                <strong>Answer:</strong> It changes how the model transforms inputs to outputs. The same input can produce different outputs based on different parameter values.
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="showSection('lesson2')">Next: Lesson 2 →</button>
+            </section>
+
+            <!-- Lesson 2 Section -->
+            <section id="lesson2" class="section">
+                <h2>Lesson 2: Core Concepts & Intuition</h2>
+                <p>Estimated Time: 30 minutes</p>
+
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Understand how AI learns from data</li>
+                        <li>Learn about features and their importance</li>
+                        <li>Build intuition for model behavior</li>
+                    </ul>
+                </div>
+
+                <h3>Concept: Learning from Data</h3>
+                <p>In Lesson 1, we set parameters manually. Real AI systems <strong>learn</strong> the best parameters from data!</p>
+
+                <p><strong>Learning</strong> means: finding parameter values that make predictions as close as possible to actual data.</p>
+
+                <div class="example-box">
+                    <h4>Example: Simple Linear Relationship</h4>
+                    <pre><code>// Model: output = 2 * input + 1
+
+Input: 1  →  Output: 3  ✓
+Input: 2  →  Output: 5  ✓
+Input: 3  →  Output: 7  ✓
+Input: 4  →  Output: 9  ✓
+
+The parameters (2 and 1) were "learned" from data!</code></pre>
+                </div>
+
+                <h3>Concept: Features Matter</h3>
+                <p>More inputs (called "features") help make better predictions:</p>
+
+                <div class="example-box">
+                    <h4>Example: Predicting House Prices</h4>
+                    <pre><code>// Better than just one feature:
+// Feature 1: Square footage
+// Feature 2: Number of bedrooms
+// Feature 3: Age of house
+
+Better features → Better predictions!</code></pre>
+                </div>
+
+                <div class="try-this">
+                    <h4>🔧 Try This</h4>
+                    <ul>
+                        <li>Think of a prediction problem (e.g., student grades, movie ratings)</li>
+                        <li>What are the input features you'd use?</li>
+                        <li>Which feature do you think is most important?</li>
+                    </ul>
+                </div>
+
+                <div class="key-takeaways">
+                    <h4>✅ Key Takeaways</h4>
+                    <ul>
+                        <li>Learning = Finding the best parameters from data</li>
+                        <li>More features usually = better predictions</li>
+                        <li>Each feature has a weight (importance)</li>
+                        <li>Different problems need different features</li>
+                    </ul>
+                </div>
+
+                <button class="btn" onclick="showSection('lesson1')">← Previous: Lesson 1</button>
+                <button class="btn" onclick="showSection('lesson3')">Next: Lesson 3 →</button>
+            </section>
+
+            <!-- Lesson 3 Section -->
+            <section id="lesson3" class="section">
+                <h2>Lesson 3: Building Your AI Intuition</h2>
+                <p>Estimated Time: 35 minutes</p>
+
+                <div class="learning-objectives">
+                    <h4>🎯 Learning Objectives</h4>
+                    <ul>
+                        <li>Apply AI concepts to real problems</li>
+                        <li>Understand different types of models</li>
+                        <li>Think critically about AI system design</li>
+                    </ul>
+                </div>
+
+                <h3>Concept: Types of Models</h3>
+                <p>Different problems need different model types:</p>
+
+                <div class="example-box">
+                    <h4>Three Common Model Types</h4>
+                    <pre><code>1. Linear:      y = 2x + 1
+   (Best for straight-line relationships)
+
+2. Quadratic:   y = x² + 2x + 1
+   (Best for curved relationships)
+
+3. Exponential: y = 2^x
+   (Best for rapidly growing relationships)
+
+Choose the right model type for your data!</code></pre>
+                </div>
+
+                <h3>Real-World Application Example</h3>
+                <p>Let's say you want to predict customer spending. You'd need:</p>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>Features: account age, purchase frequency, average spend</li>
+                    <li>Model type: likely linear or slightly quadratic</li>
+                    <li>Learned parameters: weights for each feature</li>
+                    <li>Output: predicted customer lifetime value</li>
+                </ul>
+
+                <div class="try-this">
+                    <h4>🔧 Try This</h4>
+                    <ul>
+                        <li>Think of a real-world prediction problem you're interested in</li>
+                        <li>What features would you collect?</li>
+                        <li>What model type (linear, quadratic, exponential) might work?</li>
+                        <li>How would you validate if your model is good?</li>
+                    </ul>
+                </div>
+
+                <div class="key-takeaways">
+                    <h4>✅ Key Takeaways</h4>
+                    <ul>
+                        <li>Model type matters - choose based on your data pattern</li>
+                        <li>Real AI combines basic building blocks you've learned</li>
+                        <li>Good model design requires understanding the problem</li>
+                        <li>Validation is crucial - test before deploying</li>
+                    </ul>
+                </div>
+
+                <div class="checkpoint">
+                    <h4>📋 Final Challenge</h4>
+                    <p>You've completed all three lessons! Now it's time to apply your knowledge:</p>
+                    <div class="question">
+                        <details>
+                            <summary>Challenge: Design Your Own AI Model</summary>
+                            <div class="answer">
+                                <strong>Task:</strong> Think of a prediction problem you care about:
+                                <ol style="margin: 10px 0 10px 20px;">
+                                    <li>Define the problem clearly</li>
+                                    <li>Choose 3-5 features to use</li>
+                                    <li>Decide what model type fits best</li>
+                                    <li>Sketch out how you'd evaluate it</li>
+                                </ol>
+                                Bonus: Try to implement a simple version!
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <h3>🎉 Congratulations!</h3>
+                <p>You've completed the Physical AI Book! You now understand:</p>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>✅ The AI pipeline structure</li>
+                    <li>✅ How parameters control behavior</li>
+                    <li>✅ How AI learns from data</li>
+                    <li>✅ How to choose models and features</li>
+                    <li>✅ How to think about real-world AI problems</li>
+                </ul>
+
+                <h3>What's Next?</h3>
+                <p><strong>Keep learning!</strong> Consider:</p>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>Explore real ML frameworks (TensorFlow, PyTorch)</li>
+                    <li>Build your own AI model on a real dataset</li>
+                    <li>Read research papers on AI topics</li>
+                    <li>Join AI communities and ask questions</li>
+                </ul>
+
+                <button class="btn" onclick="showSection('lesson2')">← Previous: Lesson 2</button>
+                <button class="btn" onclick="showSection('home')">Home</button>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section">
+                <h2>About This Book</h2>
+
+                <h3>Purpose</h3>
+                <p>Physical AI Book is designed to teach artificial intelligence concepts through hands-on, interactive learning. We believe you learn best by doing, experimenting, and building intuition - not just reading theory.</p>
+
+                <h3>Philosophy</h3>
+                <div class="learning-objectives">
+                    <ul>
+                        <li>✅ <strong>Hands-On First:</strong> Work with real code and examples</li>
+                        <li>✅ <strong>Progressive:</strong> Build from fundamentals to applications</li>
+                        <li>✅ <strong>Practical:</strong> Real-world scenarios and problems</li>
+                        <li>✅ <strong>Accessible:</strong> No advanced math required - just curiosity!</li>
+                    </ul>
+                </div>
+
+                <h3>Who This Is For</h3>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>Beginners interested in AI</li>
+                    <li>People with basic programming knowledge</li>
+                    <li>Anyone who wants to understand AI intuition</li>
+                    <li>Students exploring machine learning</li>
+                </ul>
+
+                <h3>Features</h3>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>💻 Working code examples you can run</li>
+                    <li>📊 Visual diagrams for each concept</li>
+                    <li>✅ Self-assessment checkpoints</li>
+                    <li>🔧 Modification challenges</li>
+                    <li>🚀 Real-world applications</li>
+                </ul>
+
+                <h3>Support</h3>
+                <p>Questions? Issues? Want to suggest improvements?</p>
+                <ul style="margin-left: 20px; margin: 15px 0;">
+                    <li>📧 Email: support@example.com</li>
+                    <li>💬 GitHub Discussions: Link to community</li>
+                    <li>🐛 Report Issues: GitHub Issues</li>
+                </ul>
+
+                <h3>License</h3>
+                <p>Physical AI Book is open source and free to use. See LICENSE file for details.</p>
+
+                <button class="btn" onclick="showSection('home')">← Back to Home</button>
+            </section>
+        </div>
+
+        <footer>
+            <p>Physical AI Book © 2025 | Learn AI through hands-on examples</p>
+            <p>Hosted locally on your machine | No internet required after download</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show selected section
+            const selected = document.getElementById(sectionId);
+            if (selected) {
+                selected.classList.add('active');
+            }
+
+            // Update nav
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

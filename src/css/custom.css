@@ -1,0 +1,99 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a simple framework built on top of it.
+ * For details, visit: https://infima.dev/
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #1f6feb;
+  --ifm-color-primary-darkest: #1a4620;
+  --ifm-color-primary-light: #378a64;
+  --ifm-color-primary-lighter: #4c9a7a;
+  --ifm-color-primary-lightest: #6ba391;
+  --ifm-code-font-size: 95%;
+  --docusaurus-primary-color: #2e8555;
+  --docusaurus-secondary-color: #1a4620;
+}
+
+html[data-theme='dark'] {
+  --ifm-color-primary: #4c9a7a;
+  --ifm-color-primary-dark: #378a64;
+  --ifm-color-primary-darker: #2e8555;
+  --ifm-color-primary-darkest: #29784c;
+  --ifm-color-primary-light: #6ba391;
+  --ifm-color-primary-lighter: #7db5a6;
+  --ifm-color-primary-lightest: #a8d5c4;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-background-color: #1a1a1a;
+  --ifm-heading-color: #ffffff;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Custom component styling */
+.learning-objectives {
+  background-color: #f0f8f5;
+  border-left: 4px solid var(--ifm-color-primary);
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+}
+
+[data-theme='dark'] .learning-objectives {
+  background-color: #1a3a2a;
+  border-left-color: #4c9a7a;
+}
+
+.try-this {
+  background-color: #fffbea;
+  border-left: 4px solid #f59e0b;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+}
+
+[data-theme='dark'] .try-this {
+  background-color: #3a2a1a;
+  border-left-color: #fbbf24;
+}
+
+.key-takeaways {
+  background-color: #f3f4f6;
+  border-left: 4px solid #6b7280;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+}
+
+[data-theme='dark'] .key-takeaways {
+  background-color: #2a2a3a;
+  border-left-color: #9ca3af;
+}
+
+.checkpoint {
+  background-color: #f0fdf4;
+  border-left: 4px solid #10b981;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+}
+
+[data-theme='dark'] .checkpoint {
+  background-color: #1a3a2a;
+  border-left-color: #34d399;
+}
